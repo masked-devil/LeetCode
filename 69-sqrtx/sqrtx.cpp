@@ -1,8 +1,8 @@
 class Solution {
 public:
     int mySqrt(int x) {
-        unsigned long long int l=1;
-        unsigned long long int h=x;
+        unsigned long int l=1;
+        unsigned long int h=x;
         unsigned long long int mid=(l+h)/2;
         if(x==0)return 0;
         int ans=1;
