@@ -1,17 +1,23 @@
 class Solution {
 public:
     int mySqrt(int x) {
-        unsigned long int l=1;
-        unsigned long int h=x;
-        unsigned long long int mid=(l+h)/2;
-        if(x==0)return 0;
-        int ans=1;
+        int low=0;
+        int high=x;
+        int mid=low+(high-low)/2;
+        int ans=0;
+        if(x<2){
+            return x;
+        }
 
-        while(l<=h){
-            if(mid*mid==x) return mid;
-            else if(mid*mid>x) {h=mid-1;}
-            else {ans=mid;l=mid+1;}
-            mid=(l+h)/2;
+        while(low<=high){
+            if(mid!=0 && x/mid >= mid){
+                ans=mid;
+                low=mid+1;
+            }
+            else{
+                high=mid-1;
+            }
+            mid=low+(high-low)/2;
         }
         return ans;
         
