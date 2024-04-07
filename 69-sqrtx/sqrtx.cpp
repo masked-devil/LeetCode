@@ -10,7 +10,7 @@ public:
         }
 
         while(low<=high){
-            if(mid!=0 && x/mid >= mid){
+            if(x/mid >= mid){
                 ans=mid;
                 low=mid+1;
             }
