@@ -22,7 +22,7 @@ public:
             else if(nums[low]>nums[mid]){
                 high=mid-1;
             }
-            else{
+            else if (nums[low]<=nums[mid]){
                 low=mid+1;
             }
             mid=low+(high-low)/2;
