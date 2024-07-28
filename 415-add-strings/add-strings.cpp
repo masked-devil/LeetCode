@@ -1,46 +1,26 @@
 class Solution {
 public:
+    void add(string& num1, int p1, string& num2, int p2, int carry, string& ans){
+        if(p1<0 && p2<0){
+            if(carry!=0){
+                ans.push_back(carry+'0');
+            }
+            return;
+        }
+
+        int n1 = (p1>=0 ? num1[p1]:'0')-'0';
+        int n2 = (p2>=0 ? num2[p2]:'0')-'0';
+        int sum = n1+n2+carry;
+        int digit = sum%10;
+        carry = sum/10;
+        ans.push_back(digit+'0');
+
+        add(num1, p1-1, num2, p2-1, carry, ans);
+    }
     string addStrings(string num1, string num2) {
-        reverse(num1.begin(),num1.end());
-        reverse(num2.begin(),num2.end());
+        string ans = "";
+        add(num1,num1.length()-1,num2, num2.length()-1,0,ans);
 
-        int i=0;
-        int carry=0;
-        string ans="";
-        while(i<num1.length() && i<num2.length()){
-            int sum=(num1[i]-'0')+(num2[i]-'0')+carry;
-            if(sum>=10){
-                ans.push_back(sum%10+'0');
-                carry=1;
-            }
-            else{
-                ans.push_back(sum+'0');
-                carry=0;
-            }
-            i++;
-        }
-        int index=i;
-        while(index<num1.length()){
-            int sum=(num1[index]-'0')+carry;
-            ans.push_back(sum%10+'0');
-            if(sum<10){
-                carry=0;
-            }
-            index++;
-
-        }
-        while(i<num2.length()){
-            int sum=(num2[i]-'0')+carry;
-            ans.push_back(sum%10+'0');
-            if(sum<10){
-                carry=0;
-            }
-            i++;
-
-        }
-        if(carry==1){
-            ans.push_back('1');
-        }
         reverse(ans.begin(),ans.end());
 
         return ans;
