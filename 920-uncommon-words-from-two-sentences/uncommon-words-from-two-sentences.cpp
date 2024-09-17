@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<string> uncommonFromSentences(string s1, string s2) {
-        map<string, int> mp;
+        unordered_map<string, int> mp;
         vector<string> ans;
         int start=0;
 
@@ -22,11 +22,11 @@ public:
         for(int i=0;i<=s2.size();i++){
             if(s2[i]==' ' || s2[i]=='\0'){
                 string word=s2.substr(start,i-start);
-                if(mp.count(word)!=1){
-                    mp[word]=1000;
+                if(mp.count(word)==1){
+                    mp[word]++;
                 }
                 else{
-                    mp[word]++;
+                    mp[word]=1;
                 }
                 start=i+1;
             }
