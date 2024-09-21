@@ -11,7 +11,7 @@
 class Solution {
 public:
     
-    ListNode* reverseList(ListNode* head) {
+    ListNode* reverseList(ListNode* &head) {
         ListNode* prevNode=NULL;
         ListNode* currNode=head;
         
