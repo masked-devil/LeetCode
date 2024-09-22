@@ -10,30 +10,32 @@
  */
 class Solution {
 public:
-    bool checkPalindrome(string s){
-        int i=0;
-        int j=s.length()-1;
-
-        while(i<j){
-            if(s[i]!=s[j]){
-                return false;
-            }
-            i++;
-            j--;
-        }
-        return true;
-    }
     bool isPalindrome(ListNode* head) {
-        if(head->next==NULL){
-            return true;
-        }
-        string str="";
         ListNode* temp=head;
-        while(temp){
-            str.push_back(temp->val+'0');
+
+        ListNode* head2=new ListNode(temp->val);
+        temp=temp->next;
+
+        while(temp!=NULL){
+
+            ListNode* newNode=new ListNode(temp->val);
+            newNode->next=head2;
+            head2=newNode;
             temp=temp->next;
         }
-        return checkPalindrome(str);
+        temp=head;
+        ListNode* temp2=head2;
+
+        while(temp!=NULL){
+            if(temp->val!=temp2->val){
+                return false;
+            }
+            temp=temp->next;
+            temp2=temp2->next;
+        }
+        return true;
+
+        
 
         
     }
