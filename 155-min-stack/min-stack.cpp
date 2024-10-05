@@ -1,7 +1,7 @@
 class Node{
     public:
-    long long int data;
-    long long int mini;
+    int data;
+    int mini;
     Node(int data,int mini){
         this->data=data;
         this->mini=mini;
@@ -18,14 +18,14 @@ public:
         
     }
     
-    void push(long long int val) {
+    void push(int val) {
         topValue++;
         if(topValue==0){
             Node newNode(val, val);
             st.push_back(newNode);
         }
         else{
-            Node newNode(val, min(st[topValue-1].mini,(long long int)val));
+            Node newNode(val, min(st[topValue-1].mini,val));
             st.push_back(newNode);
 
         }
@@ -41,14 +41,14 @@ public:
         
     }
     
-    long long int top() {
+    int top() {
         if(topValue!=-1){
             return st[topValue].data;
         }
         return -1;
     }
     
-    long long int getMin() {
+    int getMin() {
         if(topValue!=-1){
             return st[topValue].mini;
         }
