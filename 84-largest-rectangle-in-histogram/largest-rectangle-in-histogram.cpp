@@ -16,18 +16,13 @@ public:
     void nextSmaller(vector<int>& heights, vector<int>& next){
         stack<int> st;
         int n=next.size();
-        st.push(-1);
+        st.push(n);
 
         for(int i=n-1;i>=0;i--){
-            while(st.top()!=-1 && heights[i]<=heights[st.top()]){
+            while(st.top()!=n && heights[i]<=heights[st.top()]){
                 st.pop();
             }
-            if(st.top()==-1){
-                next[i]=n;
-            }
-            else{
-                next[i]=st.top();
-            }        
+            next[i]=st.top();        
             st.push(i);
         }
     }
