@@ -1,17 +1,19 @@
 class Solution {
 public:
     int reverse(int x) {
-        unsigned int number = abs(x);
-        unsigned int reverse=0;
-        int max=INT_MAX;
-        while(number>0){
-            int digit=number%10;
-            if(reverse > max/10)return 0;
-            reverse=reverse*10+digit;
-            
-            number/=10;
+        bool isNegative=x<0?true:false;
+        int rev=0;
+        while(x!=0){
+            int temp= x%10;
+            if(isNegative){
+                temp=-1*temp;
+            }
+            x=x/10;
+            if(rev>INT_MAX/10){
+                return 0;
+            }
+            rev= rev*10+temp;
         }
-        // if(reverse>=max)return 0;
-        return x>0?reverse:-1*reverse;
+        return isNegative?-rev:rev;
     }
 };
