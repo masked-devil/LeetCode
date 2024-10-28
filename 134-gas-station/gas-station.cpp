@@ -1,38 +1,24 @@
 class Solution {
 public:
     int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
-        int n=gas.size();
-        int sum=0;
-        // vector<int> diff(n);
-        queue<pair<int,int>> q;
+        int fuelTank=0;
+        int deficit=0;
+        int start=0;
 
-        for(int i=0;i<n;i++){
-            pair<int,int> diff=make_pair(gas[i]-cost[i],i);
-            sum+=diff.first;
-            q.push(diff);
+        for(int i=0;i<gas.size();i++){
+            fuelTank+=gas[i]-cost[i];
+
+            if(fuelTank<0){
+                deficit+=abs(fuelTank);
+                fuelTank=0;
+                start=i+1;
+            }
         }
-        if(sum<0){
+
+        if(fuelTank<abs(deficit)){
             return -1;
         }
-        sum=0;
-        int k=n;
-        while(k){
-            pair<int,int> num=q.front();
-            
-            sum+=num.first;
-            if(sum<0){
-                sum=0;
-                k=n;
-            }
-            else{
-                k--;
-            }
-            q.pop();
-            q.push(num);
-        }
-        return q.front().second;
-
-
+        return start;
 
 
 
