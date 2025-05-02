@@ -15,10 +15,33 @@ public:
         if(root==NULL){
             return 0;
         }
+        
+        int ans=0;
+        queue<TreeNode*> q;
+        q.push(root);
+        q.push(NULL);
 
-        int leftHeight = maxDepth(root->left);
-        int rightHeight = maxDepth(root->right);
+        while(!q.empty()){
+            TreeNode* front=q.front();
+            q.pop();
 
-        return leftHeight>rightHeight?leftHeight+1:rightHeight+1;
+            if(front){
+                if(front->left){
+                    q.push(front->left);
+                }
+
+                if(front->right){
+                    q.push(front->right);
+                }
+            }
+            else{
+                ans++;
+                if(!q.empty()){
+                    q.push(NULL);
+                }
+            }
+        }
+
+        return ans;
     }
 };
