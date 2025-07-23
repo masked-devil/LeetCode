@@ -1,42 +1,13 @@
 class Solution {
 public:
-    int PivotIndex(vector<int>& nums){
-        int n=nums.size();
-        int low=0;
-        int high=n-1;
-        int mid=low+(high-low)/2;
-        
-
+    int solve(vector<int>& nums, int target, int low, int high){
+        int ans=-1;
         while(low<=high){
-            
-            if(low==high){
-                return low;
-            }
-
-            if(mid+1<n && nums[mid]>nums[mid+1]){
-                return mid;
-            }
-            else if(mid-1>=0 && nums[mid]<nums[mid-1]){
-                return mid-1;
-            }
-            else if(nums[low]>nums[mid]){
-                high=mid-1;
-            }
-            else if (nums[low]<=nums[mid]){
-                low=mid+1;
-            }
-            mid=low+(high-low)/2;
-            
-        }
-        return -1;
-    }
-
-    int binarySearch(vector<int>& nums, int low, int high,int target){
-        while(low<=high){
-            int mid=high+(low-high)/2;
+            int mid=low+(high-low)/2;
 
             if(nums[mid]==target){
-                return mid;
+                ans=mid;
+                break;
             }
             else if(nums[mid]<target){
                 low=mid+1;
@@ -45,25 +16,39 @@ public:
                 high=mid-1;
             }
         }
-        return -1;
+        return ans;
     }
-   
-
-
-
     int search(vector<int>& nums, int target) {
-        int pivot=PivotIndex(nums);
-        int n=nums.size();
+        int n=nums.size()-1;
+        int pivotIndex=n;
         int ans=-1;
-        if(target>=nums[0] && target<=nums[pivot]){
-            ans=binarySearch(nums,0,pivot,target);
+
+        int low=0;
+        int high=n;
+        
+        while(low<=high){
+            int mid=low+(high-low)/2;
+
+            if(mid<n && nums[mid]>nums[mid+1]){
+                pivotIndex=mid;
+                break;
+            }
+            else if(nums[mid]<nums[0]){
+                high=mid-1;
+            }
+            else{
+                low=mid+1;
+            }
+        }
+
+        if(target<nums[0]){
+            ans=solve(nums,target, pivotIndex+1,n);
         }
         else{
-            ans=binarySearch(nums,pivot+1,n-1,target);
+            ans=solve(nums,target, 0, pivotIndex);
         }
-        return ans;
-
 
         
+        return ans;
     }
 };
