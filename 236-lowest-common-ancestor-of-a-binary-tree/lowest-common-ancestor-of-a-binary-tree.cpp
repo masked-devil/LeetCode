@@ -10,18 +10,17 @@
 class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(root==NULL || root==p || root==q){
+        if(root==p || root==q || root==NULL){
             return root;
         }
 
-        TreeNode*  optionLeft = lowestCommonAncestor(root->left,p,q);
-        TreeNode*  optionRight = lowestCommonAncestor(root->right,p,q);
+        TreeNode* left = lowestCommonAncestor(root->left, p, q);
+        TreeNode* right = lowestCommonAncestor(root->right, p, q);
 
-        if(optionLeft && optionRight){
+        if(left && right){
             return root;
         }
-        else{
-            return optionLeft?optionLeft:optionRight;
-        }
+
+        return left?left:right;
     }
 };
