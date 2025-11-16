@@ -16,7 +16,7 @@ public:
             return;
         }
         
-        solve(root->left, k, ans);
+        if(ans==-1) solve(root->left, k, ans);
 
         k--;
 
@@ -25,7 +25,7 @@ public:
             return;
         }
 
-        solve(root->right, k, ans);
+        if(ans==-1) solve(root->right, k, ans);
     }
     int kthSmallest(TreeNode* root, int k) {
         int ans=-1;
