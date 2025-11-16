@@ -11,32 +11,24 @@
  */
 class Solution {
 public:
-    pair<bool, pair<long long,long long>> solve(TreeNode* root){
+    bool solve(TreeNode* root, long long start, long long end){
         if(root==NULL){
-            return {true, {LONG_MIN, LONG_MAX}};
+            return true;
         }
 
-        pair<bool, pair<long long,long long>> left=solve(root->left);
-        pair<bool, pair<long long,long long>> right=solve(root->right);
+        if(root->val <= start || root->val >= end){
+            return false;
+        }
 
-        bool isLeftBST = left.first;
-        bool isRightBST = right.first;
+        bool left=solve(root->left, start, root->val);
+        bool right=solve(root->right, root->val, end);
 
-        bool isGreaterThanLeft = root->val > left.second.first;
-        bool isLessThanRight = root->val < right.second.second;
-
-        bool isBST = isLeftBST && isRightBST && isGreaterThanLeft && isLessThanRight;
-
-        long long maxi = max({left.second.first, right.second.first, 1LL* root->val});
-        long long mini = min({left.second.second,right.second.second, 1LL* root->val});
-
-        return {isBST, {maxi,mini}};
+        return left && right;
 
     }
     bool isValidBST(TreeNode* root) {
-        pair<bool, pair<long long,long long>> ans=solve(root);
 
-        return ans.first;
+        return solve(root, LONG_MIN, LONG_MAX);
         
     }
 };
