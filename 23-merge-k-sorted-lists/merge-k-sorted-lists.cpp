@@ -44,6 +44,8 @@ public:
                 current->next = temp;
             }
             current=temp;
+
+            delete front;
         }
 
         return head;
