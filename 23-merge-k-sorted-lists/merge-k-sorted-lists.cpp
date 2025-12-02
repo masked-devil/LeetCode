@@ -8,32 +8,42 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+class Compare {
+public:
+	bool operator()(ListNode* a, ListNode* b) {
+		if(a->val > b->val) {
+			return true;
+		}
+		return false;
+	}
+};
 class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         ListNode* head=NULL;
-        ListNode* temp;
-        priority_queue<int,vector<int>,greater<int>> minHeap;
+        ListNode* temp = NULL;
+        ListNode* current = NULL;
+        priority_queue<ListNode*,vector<ListNode*>,Compare> minHeap;
 
-        for(int i=0;i< lists.size();i++){
-            while(lists[i]!=NULL){
-                minHeap.push(lists[i]->val);
-                lists[i]=lists[i]->next;
-            }
-        }
-
-        if(!minHeap.empty()){
-            int x = minHeap.top();
-            minHeap.pop();
-            head = new ListNode(x);
-            temp = head;
+        for(auto x:lists){
+            if(x) minHeap.push(x);
         }
 
         while(!minHeap.empty()){
-            int x = minHeap.top();
+            ListNode* front = minHeap.top();
             minHeap.pop();
-            temp->next = new ListNode(x);
-            temp = temp->next;
+            if(front->next){
+                minHeap.push(front->next);
+            }
+
+            temp = new ListNode(front->val);
+            if(!head){
+                head = temp;
+            }
+            if(current){
+                current->next = temp;
+            }
+            current=temp;
         }
 
         return head;
