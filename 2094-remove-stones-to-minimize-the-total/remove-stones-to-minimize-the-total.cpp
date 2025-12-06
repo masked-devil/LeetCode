@@ -1,19 +1,21 @@
 class Solution {
 public:
     int minStoneSum(vector<int>& piles, int k) {
-        priority_queue<int> pq;
         int sum = 0;
-        for(int x:piles){
-            sum+=x;
+        priority_queue<int> pq;
+
+        for(auto x:piles){
             pq.push(x);
+            sum+=x;
         }
 
         while(k){
-            int top = pq.top();
+            int front = pq.top();
             pq.pop();
 
-            sum-=top/2;
-            pq.push(top-(top/2));
+            int newFront = front/2;
+            sum-=newFront;
+            pq.push(front - newFront);
             k--;
         }
 
