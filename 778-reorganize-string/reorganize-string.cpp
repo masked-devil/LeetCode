@@ -22,10 +22,11 @@ public:
         string ans = "";
         for (auto x : s) {
             mp[x]++;
-            if (mp[x] > (s.length() + 1) / 2) {
-                return "";
-            }
+            // if (mp[x] > (s.length() + 1) / 2) {
+            //     return "";
+            // }
         }
+
 
         for (auto x : mp) {
             Info temp(x.first, x.second);
@@ -37,7 +38,7 @@ public:
             maxHeap.pop();
             Info top2 = maxHeap.top();
             maxHeap.pop();
-
+            
             ans.push_back(top1.c);
             ans.push_back(top2.c);
 
@@ -52,8 +53,11 @@ public:
             }
         }
 
-        if (ans.length() < s.length()) {
+        if (maxHeap.size()) {
             Info maxi = maxHeap.top();
+            if(maxi.freq > 1){
+                return "";
+            }
             ans.push_back(maxi.c);
         }
 
