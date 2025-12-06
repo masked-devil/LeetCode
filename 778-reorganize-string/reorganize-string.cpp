@@ -22,9 +22,9 @@ public:
         string ans = "";
         for (auto x : s) {
             mp[x]++;
-            // if (mp[x] > (s.length() + 1) / 2) {
-            //     return "";
-            // }
+            if (mp[x] > (s.length() + 1) / 2) {
+                return "";
+            }
         }
 
 
@@ -55,9 +55,9 @@ public:
 
         if (maxHeap.size()) {
             Info maxi = maxHeap.top();
-            if(maxi.freq > 1){
-                return "";
-            }
+            // if(maxi.freq > 1){
+            //     return "";
+            // }
             ans.push_back(maxi.c);
         }
 
