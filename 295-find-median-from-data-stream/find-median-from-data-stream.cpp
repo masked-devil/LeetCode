@@ -2,61 +2,34 @@ class MedianFinder {
 public:
     priority_queue<int> left;
     priority_queue<int, vector<int>, greater<int>> right;
-    double median;
     MedianFinder() {
-        median = 0;
-    }
 
-    void calculateMedian(){
-        if(left.size()==right.size()){
-            median = (left.top()+right.top())/2.0;
-        }
-        else if(left.size()>right.size()){
-            median = left.top();
-        }
-        else{
-            median = right.top();
-        }
     }
     
     void addNum(int num) {
-        if(left.size() == right.size()){
-            if(num<median){
-                left.push(num);
-            }
-            else{
-                right.push(num);
-            }
+        if(left.empty() || num<left.top()){
+            left.push(num);
         }
-        else if(left.size() == right.size()+1){
-            if(num>median){
-                right.push(num);
-            }
-            else{
-                int leftTop = left.top();
-                left.pop();
-                left.push(num);
-                right.push(leftTop);
-            }
-            
-        }
-        else if(left.size()+1==right.size()){
-            if(num<median){
-                left.push(num);
-            }
-            else{
-                int rightTop = right.top();
-                right.pop();
-                right.push(num);
-                left.push(rightTop);
-            }
+        else{
+            right.push(num);
         }
 
-        calculateMedian();
+        //rebalance
+        if(right.size()>left.size()){
+            left.push(right.top());
+            right.pop();
+        }
+        else if(left.size()>right.size()+1){
+            right.push(left.top());
+            left.pop();
+        }
     }
     
     double findMedian() {
-        return median;
+        if(left.size()>right.size()){
+            return left.top();
+        }
+        return (left.top()+right.top())/2.0;
     }
 };
 
