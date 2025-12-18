@@ -11,41 +11,20 @@ public:
 };
 class Solution {
 public:
-    void addWord(TrieNode* root, string word){
-        if(word.length()==0){
-            root->isTerminal = true;
-            return;
-        }
-
-        char ch = word[0];
-        TrieNode* child;
-
-        if((root->children).count(ch)==0){
-            child = new TrieNode(ch);
-            (root->children)[ch]=child;
-        }
-        else{
-            child = (root->children)[ch];
-        }
-        addWord(child, word.substr(1));
-    }
     string longestCommonPrefix(vector<string>& strs) {
-        TrieNode* root = new TrieNode('-');
+        if(strs.size()==0) return "";
+        string prefix = strs[0];
 
-        for(auto s:strs){
-            addWord(root,s);
+        for (int i=1;i<strs.size();i++){
+            string word=strs[i];
+            while(word.find(prefix)!=0){
+                prefix.pop_back();
+                if(prefix.empty()){
+                    return "";
+                }
+            }
         }
 
-        string ans = "";
-
-        TrieNode* curr = root;
-
-        while((curr->children).size()==1 && curr->isTerminal==false){
-            curr = (*((curr ->children).begin())).second;
-
-            ans.push_back(curr->ch);
-        }
-
-        return ans;
+        return prefix;
     }
 };
