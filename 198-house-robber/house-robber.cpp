@@ -1,24 +1,40 @@
 class Solution {
 public:
-    int solve(vector<int>& nums, int index, vector<int>& dp){
-        if(index>=nums.size()){
+    int solveUsingRecursion(vector<int>& nums, int index){
+        int n = nums.size();
+        if(index>=n){
             return 0;
         }
+
+        int inc = nums[index] + solveUsingRecursion(nums, index+2);
+        int exc = solveUsingRecursion(nums, index+1);
+
+        int ans = max(inc,exc);
+
+        return ans;
+    }
+    int solveUsingMem(vector<int>& nums,int index, vector<int>& dp){
+        int n = nums.size();
+        if(index>=n){
+            return 0;
+        }
+
         if(dp[index]!=-1){
             return dp[index];
         }
-        //include
-        int inc=nums[index] + solve(nums, index+2,dp);
-        //exclude
-        int exc=solve(nums,index+1,dp);
+
+        int inc = nums[index] + solveUsingMem(nums, index+2, dp);
+        int exc = solveUsingMem(nums, index+1, dp);
 
         dp[index] = max(inc,exc);
+
         return dp[index];
     }
     int rob(vector<int>& nums) {
-        vector<int> dp(nums.size()+1, -1);
-        int ans = solve(nums,0, dp);
+        // int ans = solveUsingRecursion (nums, 0);
+        int n = nums.size();
+        vector<int> dp(n, -1);
+        int ans = solveUsingMem(nums, 0 ,dp);
         return ans;
-        
     }
 };
