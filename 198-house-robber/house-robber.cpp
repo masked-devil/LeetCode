@@ -30,11 +30,28 @@ public:
 
         return dp[index];
     }
+    int solveUsingTab(vector<int>& nums){
+        int n = nums.size();
+        vector<int> dp(n,-1);
+        dp[n-1] = nums[n-1];
+        if(n == 1) return dp[0];
+        dp[n-2] = max(nums[n-1], nums[n-2]);
+
+        for(int i = n-3; i>=0; i--){
+            int inc = nums[i] + dp[i+2];
+            int exc = dp[i+1];
+
+            dp[i] = max(inc, exc);
+        }
+
+        return dp[0];
+    }
     int rob(vector<int>& nums) {
         // int ans = solveUsingRecursion (nums, 0);
-        int n = nums.size();
-        vector<int> dp(n, -1);
-        int ans = solveUsingMem(nums, 0 ,dp);
+        // int n = nums.size();
+        // vector<int> dp(n, -1);
+        // int ans = solveUsingMem(nums, 0 ,dp);
+        int ans = solveUsingTab(nums);
         return ans;
     }
 };
