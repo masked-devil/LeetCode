@@ -43,13 +43,41 @@ public:
 
         return dp[amount];
     }
+    int solveUsingTab(vector<int>& coins, int amount){
+        vector<int> dp(amount+1 , -1);
+
+        dp[0] = 0;
+
+        for(int i = 1; i<=amount; i++){
+            int miniCoins = INT_MAX;
+
+            for(auto coin:coins){
+                int coinAns;
+                if(i - coin < 0 || dp[i-coin]==INT_MAX){
+                    coinAns = INT_MAX;
+                }
+                else{
+                    coinAns = 1 + dp[i-coin];
+                }
+
+                miniCoins = min(miniCoins, coinAns);
+            }
+
+            dp[i] = miniCoins;
+        }
+
+        return dp[amount];
+    }
     int coinChange(vector<int>& coins, int amount) {
         // int ans = solveUsingRecursion(coins,amount);
         // if(ans == INT_MAX) return -1;
 
-        vector<int> dp(amount+1, -1);
-        int ans = solveUsingMem(coins, amount, dp);
-        if(ans == INT_MAX) return -1;
+        // vector<int> dp(amount+1, -1);
+        // int ans = solveUsingMem(coins, amount, dp);
+        // if(ans == INT_MAX) return -1;
+
+        int ans = solveUsingTab(coins,amount);
+        if(ans==INT_MAX) return -1;
 
         return ans;
     }
