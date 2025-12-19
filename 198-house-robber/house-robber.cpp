@@ -32,19 +32,21 @@ public:
     }
     int solveUsingTab(vector<int>& nums){
         int n = nums.size();
-        vector<int> dp(n,-1);
-        dp[n-1] = nums[n-1];
-        if(n == 1) return dp[0];
-        dp[n-2] = max(nums[n-1], nums[n-2]);
+        int next = nums[n-1];
+        if(n == 1) return nums[0];
+        int curr = max(nums[n-1], nums[n-2]);
 
         for(int i = n-3; i>=0; i--){
-            int inc = nums[i] + dp[i+2];
-            int exc = dp[i+1];
+            int inc = nums[i] + next;
+            int exc = curr;
 
-            dp[i] = max(inc, exc);
+            int ans = max(inc, exc);
+
+            next = curr;
+            curr = ans;
         }
 
-        return dp[0];
+        return curr;
     }
     int rob(vector<int>& nums) {
         // int ans = solveUsingRecursion (nums, 0);
