@@ -36,10 +36,28 @@ public:
 
         return dp[n];
     }
+    int solveUsingSO(int n){
+        int prev = 0;
+        int curr = 1;
+
+        if(n<=1){
+            return n;
+        }
+
+        int ans;
+        for(int i=2;i<=n;i++){
+            ans=prev+curr;
+            prev=curr;
+            curr=ans;
+        }
+
+        return ans;
+    }
     int fib(int n) {
         // vector<int> dp(n+1,-1);
         // return solveUsingRecursion(n);
         // return solveUsingMem(n,dp);
-        return solveUsingTab(n);
+        // return solveUsingTab(n);
+        return solveUsingSO(n);
     }
 };
