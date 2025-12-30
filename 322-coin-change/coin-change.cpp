@@ -1,29 +1,26 @@
 class Solution {
 public:
-    int solveMem(vector<int>& coins, int amount, vector<int>&dp){
-        if(amount<0){
-            return INT_MAX;
-        }
-        if(amount == 0){
-            return 0;
-        }
-
-        if(dp[amount]!=-1){
-            return dp[amount];
-        }
+    int solveTab(vector<int>& coins, int amount ){
+        vector<int> dp(amount+1, -1);
+        dp[0]=0;
 
         int mini = INT_MAX;
-        for(auto coin:coins){
-            int recAns = solveMem(coins, amount - coin, dp);
-            if(recAns!=INT_MAX) recAns++;
-            mini = min(mini, recAns);
+        for(int i=1;i<=amount;i++){
+            int mini = INT_MAX;
+            for(auto coin:coins){
+                if(i-coin >= 0){
+                    int dpAns = dp [i-coin];
+                    if(dpAns !=INT_MAX) dpAns++;
+                    mini = min(dpAns,mini);
+                }
+            }
+            dp[i]=mini;
         }
-        dp[amount]=mini;
+
         return dp[amount];
     }
     int coinChange(vector<int>& coins, int amount) {
-        vector<int> dp(amount+1, -1);
-        int ans = solveMem(coins, amount,dp);
+        int ans = solveTab(coins, amount);
         if(ans==INT_MAX) return -1;
 
         return ans;
