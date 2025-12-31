@@ -69,6 +69,7 @@ public:
                     curr[j] = max(option1, option2);
                 }
             }
+            next = curr;
         }
 
         return curr[0];
@@ -79,6 +80,8 @@ public:
         //                        vector<int>(text2.length() + 1, -1));
         // return solveUsingMem(text1, text2, 0, 0, dp);
 
-        return solveUsingTab(text1, text2);
+        // return solveUsingTab(text1, text2);
+
+        return solveUsingSO(text1, text2);
     }
 };
