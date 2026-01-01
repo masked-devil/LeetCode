@@ -32,12 +32,12 @@ public:
         return dp[index1][index2];
     }
     int solveUsingTab(string& text1, string& text2) {
-        int n = text1.length();
-        int m = text2.length();
-        vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+        int m = text1.length();
+        int n = text2.length();
+        vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
 
-        for (int i = n - 1; i >= 0; i--) {
-            for (int j = m - 1; j >= 0; j--) {
+        for (int i = m - 1; i >= 0; i--) {
+            for (int j = n - 1; j >= 0; j--) {
 
                 if (text1[i] == text2[j]) {
                     dp[i][j] = 1 + dp[i + 1][j + 1];
@@ -53,13 +53,13 @@ public:
     }
 
     int solveUsingSO(string& text1, string& text2) {
-        int n = text1.length();
-        int m = text2.length();
-        vector<int> next(m+1,0);
-        vector<int> curr(m+1,0);
+        int m = text1.length();
+        int n = text2.length();
+        vector<int> next(n+1,0);
+        vector<int> curr(n+1,0);
 
-        for (int i = n - 1; i >= 0; i--) {
-            for (int j = m - 1; j >= 0; j--) {
+        for (int i = m - 1; i >= 0; i--) {
+            for (int j = n - 1; j >= 0; j--) {
 
                 if (text1[i] == text2[j]) {
                     curr[j] = 1 + next[j + 1];
@@ -102,9 +102,9 @@ public:
         //                        vector<int>(text2.length() + 1, -1));
         // return solveUsingMem(text1, text2, 0, 0, dp);
 
-        return solveUsingTab(text1, text2);
+        // return solveUsingTab(text1, text2);
 
-        // return solveUsingSO(text1, text2);
+        return solveUsingSO(text1, text2);
         // return solveUsingSO2(text1, text2);
     }
 };
