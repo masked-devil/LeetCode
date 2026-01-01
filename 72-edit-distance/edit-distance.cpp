@@ -1,45 +1,45 @@
 class Solution {
 public:
-    int solveUsingRec(string& word1, string& word2, int a, int b) {
-        if (a == word1.length()) {
-            return word2.length() - b;
+    int solveUsingRec(string& word1, string& word2, int index1, int index2) {
+        if (index1 == word1.length()) {
+            return word2.length() - index2;
         }
-        if (b == word2.length()) {
-            return word1.length() - a;
+        if (index2 == word2.length()) {
+            return word1.length() - index1;
         }
 
-        if (word1[a] == word2[b]) {
-            return solveUsingRec(word1, word2, a + 1, b + 1);
+        if (word1[index1] == word2[index2]) {
+            return solveUsingRec(word1, word2, index1 + 1, index2 + 1);
         } else {
-            int repl = 1 + solveUsingRec(word1, word2, a + 1, b + 1);
-            int del = 1 + solveUsingRec(word1, word2, a + 1, b);
-            int ins = 1 + solveUsingRec(word1, word2, a, b + 1);
+            int repl = 1 + solveUsingRec(word1, word2, index1 + 1, index2 + 1);
+            int del = 1 + solveUsingRec(word1, word2, index1 + 1, index2);
+            int ins = 1 + solveUsingRec(word1, word2, index1, index2 + 1);
 
             return min({repl, del, ins});
         }
     }
-    int solveUsingMem(string& word1, string& word2, int a, int b,
+    int solveUsingMem(string& word1, string& word2, int index1, int index2,
                       vector<vector<int>>& dp) {
-        if (a == word1.length()) {
-            return word2.length() - b;
+        if (index1 == word1.length()) {
+            return word2.length() - index2;
         }
-        if (b == word2.length()) {
-            return word1.length() - a;
+        if (index2 == word2.length()) {
+            return word1.length() - index1;
         }
-        if (dp[a][b] != -1) {
-            return dp[a][b];
+        if (dp[index1][index2] != -1) {
+            return dp[index1][index2];
         }
-        if (word1[a] == word2[b]) {
-            dp[a][b] = solveUsingMem(word1, word2, a + 1, b + 1, dp);
+        if (word1[index1] == word2[index2]) {
+            dp[index1][index2] = solveUsingMem(word1, word2, index1 + 1, index2 + 1, dp);
         } else {
-            int repl = 1 + solveUsingMem(word1, word2, a + 1, b + 1, dp);
-            int del = 1 + solveUsingMem(word1, word2, a + 1, b, dp);
-            int ins = 1 + solveUsingMem(word1, word2, a, b + 1, dp);
+            int repl = 1 + solveUsingMem(word1, word2, index1 + 1, index2 + 1, dp);
+            int del = 1 + solveUsingMem(word1, word2, index1 + 1, index2, dp);
+            int ins = 1 + solveUsingMem(word1, word2, index1, index2 + 1, dp);
 
-            dp[a][b] = min({repl, del, ins});
+            dp[index1][index2] = min({repl, del, ins});
         }
 
-        return dp[a][b];
+        return dp[index1][index2];
     }
 
     int solveUsingTab(string& word1, string& word2) {
@@ -69,11 +69,39 @@ public:
 
         return dp[0][0];
     }
+    int solveUsingSO(string& word1, string& word2) {
+        vector<int> next(word2.length() + 1, -1);
+        vector<int> curr(word2.length() + 1, 1);
+        int m = word1.length();
+        int n = word2.length();
+        for (int j = 0; j <= n; j++) {
+            next[j] = n - j;
+        }
+        curr[n]=1;
+        
+        for (int i = m - 1; i >= 0; i--) {
+            for (int j = n - 1; j >= 0; j--) {
+                if (word1[i] == word2[j]) {
+                    curr[j] = next[j + 1];
+                } else {
+                    int repl = 1 + next[j + 1];
+                    int del = 1 + next[j];
+                    int ins = 1 + curr[j + 1];
+
+                    curr[j] = min({repl, del, ins});
+                }
+            }
+            next = curr;
+        }
+
+        return next[0];
+    }
     int minDistance(string word1, string word2) {
         // return solveUsingRec(word1,word2,0,0);
-        vector<vector<int>> dp(word1.length() + 1,
-                               vector<int>(word2.length() + 1, -1));
+        // vector<vector<int>> dp(word1.length() ,
+        //                        vector<int>(word2.length(), -1));
         // return solveUsingMem(word1, word2, 0, 0, dp);
         return solveUsingTab(word1, word2);
+        // return solveUsingSO(word1, word2);
     }
 };
