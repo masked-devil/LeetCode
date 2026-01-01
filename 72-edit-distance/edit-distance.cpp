@@ -69,17 +69,23 @@ public:
 
         return dp[0][0];
     }
+    void printDp(vector<int>& curr){
+        for (auto n:curr){
+            cout<<n<<" ";
+        }
+        cout<<endl;
+    }
     int solveUsingSO(string& word1, string& word2) {
-        vector<int> next(word2.length() + 1, -1);
+        vector<int> next(word2.length() + 1, 0);
         vector<int> curr(word2.length() + 1, 1);
         int m = word1.length();
         int n = word2.length();
         for (int j = 0; j <= n; j++) {
             next[j] = n - j;
         }
-        curr[n]=1;
         
         for (int i = m - 1; i >= 0; i--) {
+            curr[n] = m-i;
             for (int j = n - 1; j >= 0; j--) {
                 if (word1[i] == word2[j]) {
                     curr[j] = next[j + 1];
@@ -101,7 +107,7 @@ public:
         // vector<vector<int>> dp(word1.length() ,
         //                        vector<int>(word2.length(), -1));
         // return solveUsingMem(word1, word2, 0, 0, dp);
-        return solveUsingTab(word1, word2);
-        // return solveUsingSO(word1, word2);
+        // return solveUsingTab(word1, word2);
+        return solveUsingSO(word1, word2);
     }
 };
