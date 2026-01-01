@@ -77,15 +77,18 @@ public:
     }
     int solveUsingSO(string& word1, string& word2) {
         vector<int> next(word2.length() + 1, 0);
-        vector<int> curr(word2.length() + 1, 1);
+        vector<int> curr(word2.length() + 1, 0);
         int m = word1.length();
         int n = word2.length();
         for (int j = 0; j <= n; j++) {
             next[j] = n - j;
         }
+        if(m==0){
+            return n;
+        }
         
         for (int i = m - 1; i >= 0; i--) {
-            curr[n] = m-i;
+            curr[n] = m-i; //imp
             for (int j = n - 1; j >= 0; j--) {
                 if (word1[i] == word2[j]) {
                     curr[j] = next[j + 1];
@@ -100,7 +103,7 @@ public:
             next = curr;
         }
 
-        return next[0];
+        return curr[0];
     }
     int solveUsingSO2(string& word1, string& word2) {
         vector<int> curr(word2.length() + 1, 0);
@@ -136,7 +139,7 @@ public:
         //                        vector<int>(word2.length(), -1));
         // return solveUsingMem(word1, word2, 0, 0, dp);
         // return solveUsingTab(word1, word2);
-        // return solveUsingSO(word1, word2);
-        return solveUsingSO2(word1, word2);
+        return solveUsingSO(word1, word2);
+        // return solveUsingSO2(word1, word2);
     }
 };
