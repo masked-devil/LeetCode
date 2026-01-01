@@ -102,12 +102,41 @@ public:
 
         return next[0];
     }
+    int solveUsingSO2(string& word1, string& word2) {
+        vector<int> curr(word2.length() + 1, 0);
+        int m = word1.length();
+        int n = word2.length();
+        for (int j = 0; j <= n; j++) {
+            curr[j] = n - j;
+        }
+        
+        for (int i = m - 1; i >= 0; i--) {
+            curr[n] = m-i;
+            int nextDiag = m-i-1;
+            for (int j = n - 1; j >= 0; j--) {
+                int temp = curr[j];
+                if (word1[i] == word2[j]) {
+                    curr[j] = nextDiag;
+                } else {
+                    int repl = 1 + nextDiag;
+                    int del = 1 + curr[j];
+                    int ins = 1 + curr[j + 1];
+
+                    curr[j] = min({repl, del, ins});
+                }
+                nextDiag = temp;
+            }
+        }
+
+        return curr[0];
+    }
     int minDistance(string word1, string word2) {
         // return solveUsingRec(word1,word2,0,0);
         // vector<vector<int>> dp(word1.length() ,
         //                        vector<int>(word2.length(), -1));
         // return solveUsingMem(word1, word2, 0, 0, dp);
         // return solveUsingTab(word1, word2);
-        return solveUsingSO(word1, word2);
+        // return solveUsingSO(word1, word2);
+        return solveUsingSO2(word1, word2);
     }
 };
