@@ -139,7 +139,7 @@ public:
         //                        vector<int>(word2.length(), -1));
         // return solveUsingMem(word1, word2, 0, 0, dp);
         // return solveUsingTab(word1, word2);
-        return solveUsingSO(word1, word2);
-        // return solveUsingSO2(word1, word2);
+        // return solveUsingSO(word1, word2);
+        return solveUsingSO2(word1, word2);
     }
 };
