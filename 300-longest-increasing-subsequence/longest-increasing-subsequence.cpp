@@ -62,6 +62,22 @@ public:
         return next[0];
     }
 
+    int solveUsingSO2(vector<int>& nums){
+        int n=nums.size();
+        vector<int> curr(n+1,0);
+
+        for(int i=n-1; i>=0;i--){
+            for(int j = i-1; j>=-1; j--){ //imp
+                int inc = (j == -1 || nums[i]>nums[j]) ? 1+curr[i+1] /* imp */ : 0;
+                int exc = curr[j+1]; //imp
+
+                curr[j+1] = max(inc,exc); //imp
+            }
+        }
+
+        return curr[0];
+    }
+
     int lengthOfLIS(vector<int>& nums) {
         // return solveUsingRec(nums, 0, -1);
         // int n = nums.size();
@@ -69,5 +85,6 @@ public:
         // return solveUsingMem(nums, 0, -1, dp);
         // return solveUsingTab(nums);
         return solveUsingSO(nums);
+        return solveUsingSO2(nums);
     }
 };
