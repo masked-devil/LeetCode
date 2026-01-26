@@ -1,25 +1,22 @@
 class Solution {
 public:
     bool isIsomorphic(string s, string t) {
-        map<char, char> mp;
-        set<char> mapped;
+        map<char, char> mp1;
+        map<char,char> mp2;
 
-        for(int i =0 ;i<s.length();i++){
-            char c = s[i];
-            if(mp.find(c)==mp.end()){
-                if(mapped.contains(t[i])){
-                    return false;
-                }
-                mapped.insert(t[i]);
-                mp[c] = t[i];
-                s[i]=t[i];
+        for(int i=0;i<s.length();i++){
+            char c1 = s[i];
+            char c2 = t[i];
+            if(mp1.contains(c1) || mp2.contains(c2)){
+                if(!mp1.contains(c1) || !mp2.contains(c2) || mp1[c1]!=c2 || mp2[c2]!=c1) return false;
             }
             else{
-                s[i]=mp[c];
-            }
-        }
+                mp1[c1] = c2;
+                mp2[c2] = c1;
+            } 
 
-        return s==t;
+        }
+        return true;
 
     }
 };
